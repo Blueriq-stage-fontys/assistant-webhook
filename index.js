@@ -55,19 +55,12 @@ server.post('/assistant', (req, res) =>{
         let userLastName = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.last_name ? req.body.queryResult.parameters.last_name : null;
         let age = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.age ? req.body.queryResult.parameters.age : null;
         let country = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.geo_country ? req.body.queryResult.parameters.geo_country : null;
-    }else{
-        console.log(req.body)
-        console.log(req.body.conversation[0])
-        console.log(req.body.conversation[0].conversationToken)
-        let followUpToken = req.body.conversation[0] && req.body.conversation[0].conversationToken;
-        let followUpTokenCleaned = followUpToken.replace(/[^a-zA-Z ]/g, "");
+    }else if(action === "foodintent.foodintent-custom") {
 
-        if(followUpTokenCleaned === "foodintent-followup"){
-            res.json({
-                fulfillmentText: "Congrats",
-                source: 'food'
-            })
-        }
+        res.json({
+            fulfillmentText: "Ok dit werkt",
+            source: 'food'
+        })
     }
 });
 
