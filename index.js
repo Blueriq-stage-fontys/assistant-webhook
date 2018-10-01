@@ -57,9 +57,9 @@ server.post('/assistant', (req, res) =>{
         let country = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.geo_country ? req.body.queryResult.parameters.geo_country : null;
     }else{
         console.log(req.body)
-        console.log(req.body.conversation)
-        console.log(req.body.conversation.conversationToken)
-        let followUpToken = req.body.conversation && req.body.conversation.conversationToken;
+        console.log(req.body.conversation[0])
+        console.log(req.body.conversation[0].conversationToken)
+        let followUpToken = req.body.conversation[0] && req.body.conversation[0].conversationToken;
         let followUpTokenCleaned = followUpToken.replace(/[^a-zA-Z ]/g, "");
 
         if(followUpTokenCleaned === "foodintent-followup"){
