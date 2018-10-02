@@ -70,8 +70,8 @@ server.post('/assistant', (req, res) =>{
         return res.json({
             fulfillmentText: "Okay so your name is " + userJson.name + ", you are " + userJson.age + " years old and live in " + userJson.country,
             source: "userInformation"
-    }
-    else {
+    });
+    } else {
         return res.json({
             fulfillmentText: "ok thank you for your information",
             source: "food"
