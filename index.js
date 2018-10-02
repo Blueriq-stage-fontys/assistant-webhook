@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const http = require('http');
 const fs = require('fs');
+const dialogflow = require('dialogflow');
 
 const server = express();
 server.use(bodyParser.urlencoded({
