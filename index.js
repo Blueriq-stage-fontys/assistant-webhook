@@ -13,7 +13,7 @@ server.use(bodyParser.urlencoded({
 server.use(bodyParser.json());
 
 server.post('/assistant', (req, res) =>{
-    
+
     let action = req.body.queryResult && req.body.queryResult.action ;
 
     if(action === "getWeather"){
@@ -48,7 +48,7 @@ server.post('/assistant', (req, res) =>{
         res.send(obj);
     }else if(action === "userInformation")
     {
-        console.log(req);
+        console.log(req.body.parameters);
         let id = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.given_name ? req.body.queryResult.parameters.given_name : null;
 
         let userFirstName = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.given_name ? req.body.queryResult.parameters.given_name : null;
@@ -57,7 +57,7 @@ server.post('/assistant', (req, res) =>{
         let country = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.geo_country ? req.body.queryResult.parameters.geo_country : null;
 
         let user:{
-            userId : id;
+
     }
 
     }else {
