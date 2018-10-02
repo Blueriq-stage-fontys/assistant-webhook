@@ -52,7 +52,7 @@ server.post('/assistant', (req, res) =>{
     {
 
         let parameters = req.body.queryResult.parameters;
-
+        console.log(parameters);
         let id;
 
         let userFirstName = parameters.give_name;
