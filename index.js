@@ -57,8 +57,7 @@ server.post('/assistant', (req, res) =>{
         let country = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.geo_country ? req.body.queryResult.parameters.geo_country : null;
     }else if(action === "foodintent.foodintent-custom") {
 
-        console.log(req.body.queryResult);
-        console.log(req.body);
+        console.log(req.body.queryResult.payload);;
 
     }
 });
