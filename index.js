@@ -14,7 +14,7 @@ server.use(bodyParser.json());
 
 server.post('/assistant', (req, res) =>{
 
-    console.log(req.body.queryResult.parameter.user);
+    console.log(req.body.queryResult.parameter);
     let action = req.body.queryResult && req.body.queryResult.action ;
 
     if(action === "getWeather"){
@@ -57,7 +57,10 @@ server.post('/assistant', (req, res) =>{
         let age = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.age ? req.body.queryResult.parameters.age : null;
         let country = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.geo_country ? req.body.queryResult.parameters.geo_country : null;
 
-
+        return res.json ({
+            fulfillmentText: "Okay so your name is:" + userFirstName + ", you are "+ age + " years old and live in " + country,
+            source: "userInformation"
+        })
     }else {
         return res.json({
             fulfillmentText: "ok thank you for your information",
