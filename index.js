@@ -55,7 +55,7 @@ server.post('/assistant', (req, res) =>{
 
         let id;
 
-        let userFirstName = parameters.first_name;
+        let userFirstName = parameters.name;
         let userLastName = parameters.last_name;
         let age = parameters.age.amount;
         let country = parameters.geo_country;
