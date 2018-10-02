@@ -10,13 +10,17 @@ server.use(bodyParser.urlencoded({
     extended:true
 }));
 
+const dialogflowApp = dialogflow({
+    clientId: CLIENT_ID,
+})
+
 server.use(bodyParser.json());
 
 var userJson;
 
 
 server.post('/assistant', (req, res) =>{
-    console.log(req.body.originalDetectIntentRequest.payload.user);
+    console.log(dialogflowApp);
     let action = req.body.queryResult && req.body.queryResult.action ;
 
     if(action === "getWeather"){
