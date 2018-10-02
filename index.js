@@ -12,6 +12,9 @@ server.use(bodyParser.urlencoded({
 
 server.use(bodyParser.json());
 
+var userJson;
+
+
 server.post('/assistant', (req, res) =>{
     console.log(req.conv);
     let action = req.body.queryResult && req.body.queryResult.action ;
@@ -46,8 +49,7 @@ server.post('/assistant', (req, res) =>{
 
         var obj = JSON.parse(fs.readFileSync('permission.json'));
         res.send(obj);
-    }else if(action === "userInformation")
-    {
+    }else if(action === "userInformation") {
 
         let parameters = req.body.queryResult.parameters;
         let id;
@@ -57,11 +59,19 @@ server.post('/assistant', (req, res) =>{
         let age = parameters.age.amount;
         let country = parameters.geo_country;
 
-        return res.json ({
-            fulfillmentText: "Okay so your name is " + userFirstName + ", you are "+ age + " years old and live in " + country,
+        userJson = { "name" : userFirstName, "age" : age, "country" : country};
+
+        return res.json({
+            fulfillmentText: "Okay so your name is " + userFirstName + ", you are " + age + " years old and live in " + country,
             source: "userInformation"
         })
-    }else {
+    }else if(action === "getUserInformation")
+    {
+        return res.json({
+            fulfillmentText: "Okay so your name is " + userJson.name + ", you are " + userJson.age + " years old and live in " + userJson.country,
+            source: "userInformation"
+    }
+    else {
         return res.json({
             fulfillmentText: "ok thank you for your information",
             source: "food"
