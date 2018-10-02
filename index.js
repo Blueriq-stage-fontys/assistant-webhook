@@ -13,9 +13,7 @@ server.use(bodyParser.urlencoded({
 server.use(bodyParser.json());
 
 server.post('/assistant', (req, res) =>{
-
-    console.log(req.body.queryResult.parameters.age);
-    console.log(req.body.queryResult.parameters.age.amount);
+    
     let action = req.body.queryResult && req.body.queryResult.action ;
 
     if(action === "getWeather"){
@@ -52,15 +50,12 @@ server.post('/assistant', (req, res) =>{
     {
 
         let parameters = req.body.queryResult.parameters;
-        console.log(parameters);
         let id;
 
         let userFirstName = parameters.given_name;
         let userLastName = parameters.last_name;
         let age = parameters.age.amount;
         let country = parameters.geo_country;
-
-        console.log("Okay so your name is " + userFirstName + ", you are "+ age + " years old and live in " + country);
 
         return res.json ({
             fulfillmentText: "Okay so your name is " + userFirstName + ", you are "+ age + " years old and live in " + country,
