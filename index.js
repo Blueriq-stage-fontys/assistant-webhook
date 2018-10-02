@@ -59,7 +59,7 @@ server.post('/assistant', (req, res) =>{
         let country = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.geo_country ? req.body.queryResult.parameters.geo_country : null;
 
         return res.json ({
-            fulfillmentText: "Okay so your name is " + userFirstName + ", you are "+ age + " years old and live in " + country,
+            fulfillmentText: "Okay so your name is " + userFirstName + ", you are "+ age.toString() + " years old and live in " + country,
             source: "userInformation"
         })
     }else {
