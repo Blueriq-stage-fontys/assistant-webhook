@@ -13,8 +13,7 @@ server.use(bodyParser.urlencoded({
 server.use(bodyParser.json());
 
 server.post('/assistant', (req, res) =>{
-
-    console.log(req.body);
+    
     let action = req.body.queryResult && req.body.queryResult.action ;
 
     if(action === "getWeather"){
@@ -47,7 +46,7 @@ server.post('/assistant', (req, res) =>{
 
         var obj = JSON.parse(fs.readFileSync('permission.json'));
         res.send(obj);
-    }else if(action === "AssistanceIntent.AssistanceIntent-custom")
+    }else if(action === "userInformation")
     {
         console.log(req);
         let id = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.given_name ? req.body.queryResult.parameters.given_name : null;
@@ -56,6 +55,11 @@ server.post('/assistant', (req, res) =>{
         let userLastName = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.last_name ? req.body.queryResult.parameters.last_name : null;
         let age = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.age ? req.body.queryResult.parameters.age : null;
         let country = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.geo_country ? req.body.queryResult.parameters.geo_country : null;
+
+        let user:{
+            userId : id;
+    }
+
     }else {
         return res.json({
             fulfillmentText: "ok thank you for your information",
