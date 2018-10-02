@@ -16,7 +16,7 @@ var userJson;
 
 
 server.post('/assistant', (req, res) =>{
-    console.log(req.body.user.container);
+    console.log(req.body.payload.user);
     let action = req.body.queryResult && req.body.queryResult.action ;
 
     if(action === "getWeather"){
