@@ -51,7 +51,7 @@ server.post('/assistant', (req, res) =>{
     }else if(action === "userInformation")
     {
 
-        let parameters = req.body.queryResults.parameters;
+        let parameters = req.body.queryResult.parameters;
 
         let id;
 
