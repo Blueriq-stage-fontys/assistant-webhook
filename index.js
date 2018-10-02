@@ -50,16 +50,18 @@ server.post('/assistant', (req, res) =>{
         res.send(obj);
     }else if(action === "userInformation")
     {
-        console.log(req.body.parameters);
-        let id = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.given_name ? req.body.queryResult.parameters.given_name : null;
 
-        let userFirstName = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.given_name ? req.body.queryResult.parameters.given_name : null;
-        let userLastName = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.last_name ? req.body.queryResult.parameters.last_name : null;
-        let age = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.age.amount ? req.body.queryResult.parameters.age : null;
-        let country = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.geo_country ? req.body.queryResult.parameters.geo_country : null;
+        let parameters = req.body.queryResults.parameters;
+
+        let id;
+
+        let userFirstName = parameters.first_name;
+        let userLastName = parameters.last_name;
+        let age = parameters.age.amount;
+        let country = parameters.geo_country;
 
         return res.json ({
-            fulfillmentText: "Okay so your name is " + userFirstName + ", you are "+ age.toString() + " years old and live in " + country,
+            fulfillmentText: "Okay so your name is " + userFirstName + ", you are "+ age + " years old and live in " + country,
             source: "userInformation"
         })
     }else {
