@@ -13,7 +13,7 @@ server.use(bodyParser.urlencoded({
 server.use(bodyParser.json());
 
 server.post('/assistant', (req, res) =>{
-    console.log(req.user)
+    console.log(req)
     let action = req.body.queryResult && req.body.queryResult.action ;
 
     if(action === "getWeather"){
