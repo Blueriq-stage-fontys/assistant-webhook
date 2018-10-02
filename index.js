@@ -60,6 +60,8 @@ server.post('/assistant', (req, res) =>{
         let age = parameters.age.amount;
         let country = parameters.geo_country;
 
+        console.log("Okay so your name is " + userFirstName + ", you are "+ age + " years old and live in " + country);
+
         return res.json ({
             fulfillmentText: "Okay so your name is " + userFirstName + ", you are "+ age + " years old and live in " + country,
             source: "userInformation"
