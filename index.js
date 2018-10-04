@@ -71,9 +71,11 @@ server.post('/assistant', (req, res) =>{
 
             resp.on('end', () =>{
 
-                console.log(JSON.parse(data).resourceSets[0].resources);
-                console.log(JSON.parse(data).resourceSets[0].resources[0].name);
-                return res.json(JSON.parse(data))
+                let location = JSON.parse(data).resourceSets[0].resources[0].name;
+                return res.json({
+                    fulfillmentText: "You are currently at " + location,
+                    source: 'location'
+                })
             });
         }).on('error', (err) => {
             console.log(err)
