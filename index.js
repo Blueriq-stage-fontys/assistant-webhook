@@ -56,8 +56,10 @@ server.post('/assistant', (req, res) =>{
         let age = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.age ? req.body.queryResult.parameters.age : null;
         let country = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.geo_country ? req.body.queryResult.parameters.geo_country : null;
     }else if(action === "foodintent.foodintent-custom"){
-        
+
         console.log(req.body.originalDetectIntentRequest)
+        console.log(req.body.originalDetectIntentRequest.user)
+        console.log(req.body.originalDetectIntentRequest.device)
     }
 });
 
