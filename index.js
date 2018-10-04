@@ -3,6 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const http = require('http');
+const https = require('https');
 const fs = require('fs');
 
 const server = express();
@@ -62,7 +63,7 @@ server.post('/assistant', (req, res) =>{
 
         let data = '';
 
-        http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long +'&key=AIzaSyCgGoOqQFP1VEKJINhitcsrj0A0Qb02wOg ', (resp) =>{
+        https.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long +'&key=AIzaSyCgGoOqQFP1VEKJINhitcsrj0A0Qb02wOg ', (resp) =>{
 
             resp.on('data', (chunk) =>{
                 data += chunk;
