@@ -72,7 +72,7 @@ server.post('/assistant', (req, res) =>{
             resp.on('end', () =>{
 
                 console.log(JSON.parse(data).resourceSets[0].resources);
-                console.log(JSON.parse(data).resourceSets[0].resources[2]);
+                console.log(JSON.parse(data).resourceSets[0].resources.name);
                 return res.json(JSON.parse(data))
             });
         }).on('error', (err) => {
