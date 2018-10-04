@@ -88,11 +88,21 @@ server.post('/assistant', (req, res) =>{
             fulfillment += " your country is " + userJson.country;
         }
 
-        let a = fulfillment.split("");
-        a[fulfillment.lastIndexOf(",")] = "";
-        fulfillment = a.join("");
-        a[fulfillment.lastIndexOf(",")] = " and";
-        fulfillment = a.join("");
+        let indexes = [];
+        for(let i = 0; i < fulfillment.length; i ++)
+        {
+            if(fulfillment[i] === ",") {indexes.push(i)}
+        }
+
+
+        let split = fulfillment.split("");
+        split[indexes[indexes.length -1]] = "";
+
+        if(indexes.length >= 2)
+        {
+            split[indexes[indexes.length -2]] = " and";
+        }
+        fulfillment = split.join("");
 
         return res.json({
             fulfillmentText: fulfillment,
