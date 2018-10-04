@@ -58,7 +58,7 @@ server.post('/assistant', (req, res) =>{
     }else if(action === "foodintent.foodintent-custom"){
 
         let detectIntentRequest = req.body.originalDetectItentRequest;
-
+        console.log(req.body.originalDetectIntentRequest)
         console.log(detectIntentRequest.profile.givenName)
         console.log(detectIntentRequest.device.location)
     }
