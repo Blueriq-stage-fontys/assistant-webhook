@@ -75,18 +75,9 @@ server.post('/assistant', (req, res) =>{
             fulfillment = "I have the following information about you,";
         }
 
-        if(userJson.name !== undefined)
-        {
-            fulfillment += " your name is " + userJson.name + ",";
-        }
-        if(userJson.age !== undefined)
-        {
-            fulfillment += " your age is " + userJson.age + ",";
-        }
-        if(userJson.country !== undefined)
-        {
-            fulfillment += " your country is " + userJson.country + ",";
-        }
+        fulfillment += (userJson.name !== undefined ? " your name is " + userJson.name + "," : "") +
+            (userJson.age !== undefined ? " your age is " + userJson.age + "," : "") +
+            (userJson.country !== undefined ? " you live in " + userJson.country + "," : "");
 
         let indexes = [];
         for(let i = 0; i < fulfillment.length; i ++)
