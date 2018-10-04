@@ -11,10 +11,6 @@ server.use(bodyParser.urlencoded({
     extended:true
 }));
 
-const dialogflowApp = dialogflow({
-    clientId: CLIENT_ID,
-})
-
 server.use(bodyParser.json());
 
 var userJson;
@@ -57,10 +53,7 @@ server.post('/assistant', (req, res) =>{
     }else if(action === "userInformation") {
 
         let parameters = req.body.queryResult.parameters;
-        let id;
-
         let userFirstName = parameters.given_name;
-        let userLastName = parameters.last_name;
         let age = parameters.age.amount;
         let country = parameters.geo_country;
 
@@ -69,11 +62,38 @@ server.post('/assistant', (req, res) =>{
         return res.json({
             fulfillmentText: "Okay so your name is " + userFirstName + ", you are " + age + " years old and live in " + country,
             source: "userInformation"
-        })
+        });
     }else if(action === "getUserInformation")
     {
+        let fulfillment;
+        if(userJson.name === undefined && userJson.country === undefined && userJson.age === undefined)
+        {
+            fulfillment = "Sorry i don't have any information about you at the moment."
+        }
+        else
+        {
+            fulfillment = "I have the following information about you,";
+        }
+
+        if(userJson.name !== undefined)
+        {
+            fulfillment += " your name is " + userJson.name + ",";
+        }
+        if(userJson.age !== undefined)
+        {
+            fulfillment += " your age is " + userJson.age;
+        }
+        if(userJson.country !== undefined)
+        {
+            fulfillment += " your country is " + userJson.country;
+        }
+
+        let a = fulfillment.split("");
+        a[fulfillment.lastIndexOf(",")] = "";
+        a[fulfillment.lastIndexOf(",")] = "and";
+
         return res.json({
-            fulfillmentText: "Okay so your name is " + userJson.name + ", you are " + userJson.age + " years old and live in " + userJson.country,
+            fulfillmentText: fulfillment,
             source: "userInformation"
     });
     } else {
