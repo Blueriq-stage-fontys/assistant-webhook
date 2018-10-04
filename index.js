@@ -3,7 +3,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const http = require('http');
-const https = require('https');
 const fs = require('fs');
 
 const server = express();
@@ -63,7 +62,7 @@ server.post('/assistant', (req, res) =>{
 
         let data = '';
 
-        https.get('http://dev.virtualearth.net/REST/v1/Locations/' + lat + ',' + long +  '5.2868734?o=&key=Aggj5CpKjEmutBw542gIzwzbk1HMDHoog7meyo5t_jGkS89ehkjyRhRZBvu9Okf7', (resp) =>{
+        http.get('http://dev.virtualearth.net/REST/v1/Locations/' + lat + ',' + long +  '5.2868734?o=&key=Aggj5CpKjEmutBw542gIzwzbk1HMDHoog7meyo5t_jGkS89ehkjyRhRZBvu9Okf7', (resp) =>{
 
             resp.on('data', (chunk) =>{
                 data += chunk;
