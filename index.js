@@ -66,35 +66,33 @@ server.post('/assistant', (req, res) =>{
     }else if(action === "getUserInformation")
     {
         let fulfillment;
-        if(userJson.name === undefined && userJson.country === undefined && userJson.age === undefined)
+        if((userJson.name === undefined && userJson.country === undefined && userJson.age === undefined) || fulfillment === undefined)
         {
             fulfillment = "Sorry i currently don't have any information about you."
         }
-        else
-        {
+        else {
+
             fulfillment = "I have the following information about you,";
+
+            fulfillment += (userJson.name !== undefined ? " your name is " + userJson.name + "," : "") +
+                (userJson.age !== undefined ? " your age is " + userJson.age + "," : "") +
+                (userJson.country !== undefined ? " you live in " + userJson.country + "," : "");
+
+            let indexes = [];
+            for (let i = 0; i < fulfillment.length; i++) {
+                if (fulfillment[i] === ",") {
+                    indexes.push(i)
+                }
+            }
+
+            let split = fulfillment.split("");
+            split[indexes[indexes.length - 1]] = "";
+
+            if (indexes.length >= 2) {
+                split[indexes[indexes.length - 2]] = " and";
+            }
+            fulfillment = split.join("");
         }
-
-        fulfillment += (userJson.name !== undefined ? " your name is " + userJson.name + "," : "") +
-            (userJson.age !== undefined ? " your age is " + userJson.age + "," : "") +
-            (userJson.country !== undefined ? " you live in " + userJson.country + "," : "");
-
-        let indexes = [];
-        for(let i = 0; i < fulfillment.length; i ++)
-        {
-            if(fulfillment[i] === ",") {indexes.push(i)}
-        }
-
-
-        let split = fulfillment.split("");
-        split[indexes[indexes.length -1]] = "";
-
-        if(indexes.length >= 2)
-        {
-            split[indexes[indexes.length -2]] = " and";
-        }
-        fulfillment = split.join("");
-
         return res.json({
             fulfillmentText: fulfillment,
             source: "userInformation"
