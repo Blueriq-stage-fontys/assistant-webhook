@@ -100,9 +100,8 @@ server.post('/assistant', (req, res) =>{
 
         let data = '';
 
-        http.get('http://dev.virtualearth.net/REST/v1/Locations/51.701129599999994,5.2868734?o=&key=Aggj5CpKjEmutBw542gIzwzbk1HMDHoog7meyo5t_jGkS89ehkjyRhRZBvu9Okf7', (resp) =>{
+        http.get('http://dev.virtualearth.net/REST/v1/Locations/' + lat + ',' + long +  '?o=&key=Aggj5CpKjEmutBw542gIzwzbk1HMDHoog7meyo5t_jGkS89ehkjyRhRZBvu9Okf7', (resp) =>{
 
-            //http://dev.virtualearth.net/REST/v1/Locations/' + lat + ',' + long +  '?o=&key=Aggj5CpKjEmutBw542gIzwzbk1HMDHoog7meyo5t_jGkS89ehkjyRhRZBvu9Okf7
             resp.on('data', (chunk) =>{
                 data += chunk;
             });
