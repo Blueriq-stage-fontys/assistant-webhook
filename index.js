@@ -57,8 +57,28 @@ server.post('/assistant', (req, res) =>{
         let country = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.geo_country ? req.body.queryResult.parameters.geo_country : null;
     }else if(action === "foodintent.foodintent-custom"){
 
-        console.log(req.body.originalDetectIntentRequest.payload.device.location.coordinates.latitude)
-        console.log(req.body.originalDetectIntentRequest.payload.device.location.coordinates.longitude)
+        let lat = req.body.originalDetectIntentRequest.payload.device.location.coordinates.latitude;
+        let long = req.body.originalDetectIntentRequest.payload.device.location.coordinates.longitude;
+
+        let data = '';
+
+        http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long +'&key=AIzaSyCgGoOqQFP1VEKJINhitcsrj0A0Qb02wOg ', (resp) =>{
+
+            resp.on('data', (chunk) =>{
+                data += chunk;
+            });
+
+            resp.on('end', () =>{
+                console.log(JSON.parse(data))
+                return res.json(JSON.parse(data))
+            });
+        }).on('error', (err) => {
+            console.log(err)
+            res.json({
+                fulfillmentText: "something went wrong finding the location"
+                source: 'location'
+            })
+        })
     }
 });
 
