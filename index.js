@@ -4,7 +4,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const http = require('http');
 const fs = require('fs');
-const {dialogflow} = require('dialogflow-fulfillment');
 
 const server = express();
 server.use(bodyParser.urlencoded({
@@ -15,9 +14,8 @@ server.use(bodyParser.json());
 
 var userJson;
 
-
 server.post('/assistant', (req, res) =>{
-    console.log(dialogflowApp);
+
     let action = req.body.queryResult && req.body.queryResult.action ;
 
     if(action === "getWeather"){
@@ -63,11 +61,9 @@ server.post('/assistant', (req, res) =>{
             fulfillmentText: "Okay so your name is " + userFirstName + ", you are " + age + " years old and live in " + country,
             source: "userInformation"
         });
-    }else if(action === "getUserInformation")
-    {
+    }else if(action === "getUserInformation") {
         let fulfillment;
-        if((userJson.name === undefined && userJson.country === undefined && userJson.age === undefined) || fulfillment === undefined)
-        {
+        if ((userJson.name === undefined && userJson.country === undefined && userJson.age === undefined) || userJson === undefined) {
             fulfillment = "Sorry i currently don't have any information about you."
         }
         else {
@@ -96,12 +92,35 @@ server.post('/assistant', (req, res) =>{
         return res.json({
             fulfillmentText: fulfillment,
             source: "userInformation"
-    });
-    } else {
-        return res.json({
-            fulfillmentText: "ok thank you for your information",
-            source: "food"
         });
+    }else if(action === "foodintent.foodintent-custom"){
+
+        let lat = req.body.originalDetectIntentRequest.payload.device.location.coordinates.latitude;
+        let long = req.body.originalDetectIntentRequest.payload.device.location.coordinates.longitude;
+
+        let data = '';
+
+        http.get('http://dev.virtualearth.net/REST/v1/Locations/' + lat + ',' + long +  '?o=&key=Aggj5CpKjEmutBw542gIzwzbk1HMDHoog7meyo5t_jGkS89ehkjyRhRZBvu9Okf7', (resp) =>{
+
+            resp.on('data', (chunk) =>{
+                data += chunk;
+            });
+
+            resp.on('end', () =>{
+
+                let location = JSON.parse(data).resourceSets[0].resources[0].name;
+                return res.json({
+                    fulfillmentText: "You are currently at " + location,
+                    source: 'location'
+                })
+            });
+        }).on('error', (err) => {
+            console.log(err)
+            res.json({
+                fulfillmentText: "something went wrong finding the location",
+                source: 'location'
+            })
+        })
     }
 });
 
