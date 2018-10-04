@@ -55,9 +55,9 @@ server.post('/assistant', (req, res) =>{
         let userLastName = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.last_name ? req.body.queryResult.parameters.last_name : null;
         let age = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.age ? req.body.queryResult.parameters.age : null;
         let country = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.geo_country ? req.body.queryResult.parameters.geo_country : null;
-    }else if(action === "foodintent.foodintent-custom") {
-
-        console.log(req.body)
+    }else if(action === "foodintent.foodintent-custom"){
+        
+        console.log(req.body.payload)
     }
 });
 
