@@ -90,7 +90,9 @@ server.post('/assistant', (req, res) =>{
 
         let a = fulfillment.split("");
         a[fulfillment.lastIndexOf(",")] = "";
-        a[fulfillment.lastIndexOf(",")] = "and";
+        fulfillment = a.join("");
+        a[fulfillment.lastIndexOf(",")] = " and";
+        fulfillment = a.join("");
 
         return res.json({
             fulfillmentText: fulfillment,
