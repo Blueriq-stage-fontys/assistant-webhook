@@ -75,7 +75,7 @@ server.post('/assistant', (req, res) =>{
         }).on('error', (err) => {
             console.log(err)
             res.json({
-                fulfillmentText: "something went wrong finding the location"
+                fulfillmentText: "something went wrong finding the location",
                 source: 'location'
             })
         })
