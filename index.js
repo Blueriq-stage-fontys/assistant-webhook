@@ -68,7 +68,7 @@ server.post('/assistant', (req, res) =>{
         let fulfillment;
         if(userJson.name === undefined && userJson.country === undefined && userJson.age === undefined)
         {
-            fulfillment = "Sorry i don't have any information about you at the moment."
+            fulfillment = "Sorry i currently don't have any information about you."
         }
         else
         {
