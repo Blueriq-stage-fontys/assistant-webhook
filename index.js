@@ -63,7 +63,7 @@ server.post('/assistant', (req, res) =>{
         });
     }else if(action === "getUserInformation") {
         let fulfillment;
-        if ((userJson.name === undefined && userJson.country === undefined && userJson.age === undefined) || fulfillment === undefined) {
+        if ((userJson.name === undefined && userJson.country === undefined && userJson.age === undefined) || userJson === undefined) {
             fulfillment = "Sorry i currently don't have any information about you."
         }
         else {
