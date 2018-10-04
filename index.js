@@ -81,11 +81,11 @@ server.post('/assistant', (req, res) =>{
         }
         if(userJson.age !== undefined)
         {
-            fulfillment += " your age is " + userJson.age;
+            fulfillment += " your age is " + userJson.age + ",";
         }
         if(userJson.country !== undefined)
         {
-            fulfillment += " your country is " + userJson.country;
+            fulfillment += " your country is " + userJson.country + ",";
         }
 
         let indexes = [];
