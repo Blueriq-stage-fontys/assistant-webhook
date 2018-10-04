@@ -57,10 +57,7 @@ server.post('/assistant', (req, res) =>{
         let country = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.geo_country ? req.body.queryResult.parameters.geo_country : null;
     }else if(action === "foodintent.foodintent-custom"){
 
-        let detectIntentRequest = req.body.originalDetectItentRequest;
-        console.log(req.body.originalDetectIntentRequest)
-        console.log(detectIntentRequest.profile.givenName)
-        console.log(detectIntentRequest.device.location)
+        console.log(req.body.originalDetectIntentRequest.payload)
     }
 });
 
