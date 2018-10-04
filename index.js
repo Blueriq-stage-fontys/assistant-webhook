@@ -12,6 +12,8 @@ server.use(bodyParser.urlencoded({
 
 server.use(bodyParser.json());
 
+var userJson;
+
 server.post('/assistant', (req, res) =>{
 
     let action = req.body.queryResult && req.body.queryResult.action ;
@@ -46,15 +48,51 @@ server.post('/assistant', (req, res) =>{
 
         var obj = JSON.parse(fs.readFileSync('permission.json'));
         res.send(obj);
-    }else if(action === "AssistanceIntent.AssistanceIntent-custom")
-    {
-        console.log(req);
-        let id = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.given_name ? req.body.queryResult.parameters.given_name : null;
+    }else if(action === "userInformation") {
 
-        let userFirstName = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.given_name ? req.body.queryResult.parameters.given_name : null;
-        let userLastName = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.last_name ? req.body.queryResult.parameters.last_name : null;
-        let age = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.age ? req.body.queryResult.parameters.age : null;
-        let country = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.geo_country ? req.body.queryResult.parameters.geo_country : null;
+        let parameters = req.body.queryResult.parameters;
+        let userFirstName = parameters.given_name;
+        let age = parameters.age.amount;
+        let country = parameters.geo_country;
+
+        userJson = { "name" : userFirstName, "age" : age, "country" : country};
+
+        return res.json({
+            fulfillmentText: "Okay so your name is " + userFirstName + ", you are " + age + " years old and live in " + country,
+            source: "userInformation"
+        });
+    }else if(action === "getUserInformation") {
+        let fulfillment;
+        if ((userJson.name === undefined && userJson.country === undefined && userJson.age === undefined) || fulfillment === undefined) {
+            fulfillment = "Sorry i currently don't have any information about you."
+        }
+        else {
+
+            fulfillment = "I have the following information about you,";
+
+            fulfillment += (userJson.name !== undefined ? " your name is " + userJson.name + "," : "") +
+                (userJson.age !== undefined ? " your age is " + userJson.age + "," : "") +
+                (userJson.country !== undefined ? " you live in " + userJson.country + "," : "");
+
+            let indexes = [];
+            for (let i = 0; i < fulfillment.length; i++) {
+                if (fulfillment[i] === ",") {
+                    indexes.push(i)
+                }
+            }
+
+            let split = fulfillment.split("");
+            split[indexes[indexes.length - 1]] = "";
+
+            if (indexes.length >= 2) {
+                split[indexes[indexes.length - 2]] = " and";
+            }
+            fulfillment = split.join("");
+        }
+        return res.json({
+            fulfillmentText: fulfillment,
+            source: "userInformation"
+        });
     }else if(action === "foodintent.foodintent-custom"){
 
         let lat = req.body.originalDetectIntentRequest.payload.device.location.coordinates.latitude;
