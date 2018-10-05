@@ -7,7 +7,6 @@
         "data": {
           "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
           "permissions": [
-            "NAME",
             "DEVICE_PRECISE_LOCATION"
           ]
         }

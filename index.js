@@ -42,11 +42,14 @@ server.post('/assistant', (req, res) =>{
 
         }).on("error", (err) => {
             console.log(err);
-            res.send(null, "something went wrong")
+            res.json({
+                fulfillmentText: "Something went wrong getting the weather information",
+                source: "weather"
+            });
         });
     }else if(action === "getLocation"){
 
-        var obj = JSON.parse(fs.readFileSync('permission.json'));
+        let obj = JSON.parse(fs.readFileSync('permission.json'));
         res.send(obj);
     }else if(action === "userInformation") {
 
@@ -62,11 +65,11 @@ server.post('/assistant', (req, res) =>{
             source: "userInformation"
         });
     }else if(action === "getUserInformation") {
+
         let fulfillment;
         if ((userJson.name === undefined && userJson.country === undefined && userJson.age === undefined) || userJson === undefined) {
-            fulfillment = "Sorry i currently don't have any information about you."
-        }
-        else {
+            fulfillment = "Sorry I currently don't have any information about you."
+        }else {
 
             fulfillment = "I have the following information about you,";
 
@@ -115,7 +118,7 @@ server.post('/assistant', (req, res) =>{
                 })
             });
         }).on('error', (err) => {
-            console.log(err)
+            console.log(err);
             res.json({
                 fulfillmentText: "something went wrong finding the location",
                 source: 'location'
